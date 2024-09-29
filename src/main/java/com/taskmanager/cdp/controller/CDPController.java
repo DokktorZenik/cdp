@@ -38,6 +38,7 @@ public class CDPController {
     public ResponseEntity<?> updateTasks(@PathVariable String org_name, @PathVariable String project_name,@RequestBody JsonNode request) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         String creator = request.get("created_by").asText();
+        System.out.println("PIRNT");
 
 
         if(!request.get("tasks").isArray()){
