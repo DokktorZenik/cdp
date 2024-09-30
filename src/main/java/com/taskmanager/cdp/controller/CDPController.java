@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.taskmanager.cdp.model.Task;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,11 +25,16 @@ public class CDPController {
             return ResponseEntity.badRequest().body("Tasks must be an array");
         }
         ArrayNode tasks = (ArrayNode) request.get("tasks");
-        List<Task> taskList = new ArrayList<>();
+        List<JsonNode> tasksCreateList = new ArrayList<>();
         for (JsonNode task : tasks) {
-            ObjectNode fullTask = ((ObjectNode)task).put("created_by", creator); //TODO: Access Metadata service for project ID and org ID
-            taskList.add(mapper.treeToValue(fullTask, Task.class));
+            ObjectNode fullTask = ((ObjectNode)task)
+                    .put("created_by", creator); //TODO: Access Metadata service for project ID and org ID
+            tasksCreateList.add(
+                    mapper.createObjectNode()
+                            .put("method","CREATE")
+                            .set("body",fullTask));
         }
+
 
         return ResponseEntity.ok().build();
     }
@@ -38,17 +42,20 @@ public class CDPController {
     public ResponseEntity<?> updateTasks(@PathVariable String org_name, @PathVariable String project_name,@RequestBody JsonNode request) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         String creator = request.get("created_by").asText();
-        System.out.println("PIRNT");
 
 
         if(!request.get("tasks").isArray()){
             return ResponseEntity.badRequest().body("Tasks must be an array");
         }
         ArrayNode tasks = (ArrayNode) request.get("tasks");
-        List<Task> taskList = new ArrayList<>();
+        List<JsonNode> tasksUpdateList = new ArrayList<>();
         for (JsonNode task : tasks) {
-            ObjectNode fullTask = ((ObjectNode)task).put("created_by", creator); //TODO: Access Metadata service for project ID and org ID
-            taskList.add(mapper.treeToValue(fullTask, Task.class));
+            ObjectNode fullTask = ((ObjectNode)task)
+                    .put("created_by", creator); //TODO: Access Metadata service for project ID and org ID
+            tasksUpdateList.add(
+                    mapper.createObjectNode()
+                            .put("method","UPDATE")
+                            .set("body",fullTask));
         }
 
         return ResponseEntity.ok().build();
