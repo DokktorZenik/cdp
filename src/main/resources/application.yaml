@@ -1,0 +1,3 @@
+spring.application.name=CDP
+server.port=8081
+spring.rabbitmq.host= rabbitmq.default.svc.cluster.local
