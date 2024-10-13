@@ -20,9 +20,9 @@ public class CDPController {
 
     private final CDPService cdpService;
     @PostMapping("organizations/{org_name}/projects/{project_name}/tasks")
-    public ResponseEntity<?> addTasks(@PathVariable String org_name, @PathVariable String project_name,@RequestBody JsonNode request) throws JsonProcessingException {
+    public ResponseEntity<?> addTasks(@RequestBody JsonNode request) throws JsonProcessingException {
         try {
-            cdpService.createTask(org_name, project_name, request);
+            cdpService.createTask(request);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
