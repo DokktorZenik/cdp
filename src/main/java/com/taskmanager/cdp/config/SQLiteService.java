@@ -17,8 +17,8 @@ public class SQLiteService {
 
     public Integer[] getIds(String orgName, String projectName) {
         try (Connection connection = DriverManager.getConnection(DB_URL)) {
-            Integer orgId = getIdByField(connection, "organizations", "name", orgName);
-            Integer projectId = getIdByField(connection, "projects", "name", projectName);
+            Integer orgId = getIdByField(connection, "organization", "name", orgName);
+            Integer projectId = getIdByField(connection, "project", "name", projectName);
             return new Integer[]{orgId, projectId};
         } catch (SQLException e) {
             throw new RuntimeException("Database error", e);

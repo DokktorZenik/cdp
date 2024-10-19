@@ -23,7 +23,7 @@ import static com.taskmanager.cdp.config.ProjectContextHolder.setContext;
 @RequiredArgsConstructor
 public class OrgAndProjFilter implements Filter {
 
-    private static final Pattern URL_PATTERN = Pattern.compile("\\/organizations\\/([^\\/]+)\\/projects\\/([^\\/]+)");
+    private static final Pattern URL_PATTERN = Pattern.compile("\\/organizations\\/([^\\/]+)\\/projects\\/([^\\/]+)(\\/.*)?$");
 
     private final SQLiteService sqLiteService;
 

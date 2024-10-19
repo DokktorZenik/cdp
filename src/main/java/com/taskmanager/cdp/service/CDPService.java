@@ -41,10 +41,11 @@ public class CDPService {
         }
     }
 
-    public void updateTask(String org_name,String project_name,JsonNode request){
+    public void updateTask(JsonNode request){
         ObjectMapper mapper = new ObjectMapper();
         String creator = request.get("created_by").asText();
 
+        ProjectContext context = getContext();
 
         if(!request.get("tasks").isArray()){
             return;
@@ -52,7 +53,9 @@ public class CDPService {
         ArrayNode tasks = (ArrayNode) request.get("tasks");
         for (JsonNode task : tasks) {
             ObjectNode fullTask = ((ObjectNode)task)
-                    .put("created_by", creator); //TODO: Access Metadata service for project ID and org ID
+                    .put("created_by", creator)
+                    .put("org_id", context.getOrgId())
+                    .put("project_id", context.getProjectId());
             rabbitTemplate.convertAndSend("task-exchange","task",
                     (Object) mapper.createObjectNode()
                             .put("method","UPDATE")
