@@ -1,11 +1,11 @@
 spring:
   rabbitmq:
-    host: localhost
-    username: guest
-    password: guest
+    host: ${RABBITMQ_HOST}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
   application:
     name: CDP
 server:
-  port: 8081
+  port: ${SERVER_PORT}
 sqlite:
-  url: jdbc:sqlite:/home/almerlinux/Microservices/metadata.sqlite
+  url: ${SQLITE_URL}
