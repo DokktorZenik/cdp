@@ -7,7 +7,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -45,17 +44,8 @@ public class OrgAndProjFilter implements Filter {
                 String orgName = matcher.group(1);
                 String projectName = matcher.group(2);
                 Integer[] ids = sqLiteService.getIds(orgName, projectName);
-                HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-                if(ids == null || ids[0] == null || ids[1] == null) {
-                    httpServletResponse.setStatus(HttpStatus.BAD_REQUEST.value());
-                    String error = "Wrong organization or project name";
-                    httpServletResponse.getWriter().write(error);
-                    return;
-                }
 
                 setContext(new ProjectContext(ids[0], ids[1]));
-            } else {
-                throw new IOException("Invalid request");
             }
 
             chain.doFilter(request, response);
