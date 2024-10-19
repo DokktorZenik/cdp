@@ -1,3 +1,11 @@
-spring.application.name=CDP
-server.port=8081
-spring.rabbitmq.host= rabbitmq.default.svc.cluster.local
+spring:
+  rabbitmq:
+    host: ${RABBITMQ_HOST}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
+  application:
+    name: CDP
+server:
+  port: ${SERVER_PORT}
+sqlite:
+  url: ${SQLITE_URL}

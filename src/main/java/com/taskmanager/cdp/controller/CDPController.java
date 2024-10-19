@@ -29,9 +29,9 @@ public class CDPController {
         return ResponseEntity.ok().build();
     }
     @PutMapping("organizations/{org_name}/projects/{project_name}/tasks")
-    public ResponseEntity<?> updateTasks(@PathVariable String org_name, @PathVariable String project_name,@RequestBody JsonNode request) throws JsonProcessingException {
+    public ResponseEntity<?> updateTasks(@RequestBody JsonNode request) throws JsonProcessingException {
         try {
-            cdpService.updateTask(org_name, project_name, request);
+            cdpService.updateTask(request);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

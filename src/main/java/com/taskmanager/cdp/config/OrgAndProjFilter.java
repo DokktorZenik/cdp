@@ -23,7 +23,7 @@ import static com.taskmanager.cdp.config.ProjectContextHolder.setContext;
 @RequiredArgsConstructor
 public class OrgAndProjFilter implements Filter {
 
-    private static final Pattern URL_PATTERN = Pattern.compile("^/organizations/([^/]+)/projects/([^/]+)$");
+    private static final Pattern URL_PATTERN = Pattern.compile("\\/organizations\\/([^\\/]+)\\/projects\\/([^\\/]+)(\\/.*)?$");
 
     private final SQLiteService sqLiteService;
 
@@ -46,6 +46,8 @@ public class OrgAndProjFilter implements Filter {
                 Integer[] ids = sqLiteService.getIds(orgName, projectName);
 
                 setContext(new ProjectContext(ids[0], ids[1]));
+            } else {
+                throw new IOException("Invalid request");
             }
 
             chain.doFilter(request, response);
