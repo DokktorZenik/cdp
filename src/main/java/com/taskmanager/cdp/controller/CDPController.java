@@ -19,7 +19,7 @@ import java.util.List;
 public class CDPController {
 
     private final CDPService cdpService;
-    @PostMapping("organizations/{org_name}/projects/{project_name}/tasks")
+    @PostMapping("v1/organizations/{org_name}/projects/{project_name}/tasks")
     public ResponseEntity<?> addTasks(@RequestBody JsonNode request) throws JsonProcessingException {
         try {
             cdpService.createTask(request);
@@ -28,7 +28,7 @@ public class CDPController {
         }
         return ResponseEntity.ok().build();
     }
-    @PutMapping("organizations/{org_name}/projects/{project_name}/tasks")
+    @PutMapping("v1/organizations/{org_name}/projects/{project_name}/tasks")
     public ResponseEntity<?> updateTasks(@RequestBody JsonNode request) throws JsonProcessingException {
         try {
             cdpService.updateTask(request);
