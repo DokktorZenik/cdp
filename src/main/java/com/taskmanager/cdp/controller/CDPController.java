@@ -20,7 +20,7 @@ public class CDPController {
 
     private final CDPService cdpService;
     @PostMapping("v1/organizations/{org_name}/projects/{project_name}/tasks")
-    public ResponseEntity<?> addTasks(@RequestBody JsonNode request) throws JsonProcessingException {
+    public ResponseEntity<?> addTasks(@RequestBody JsonNode request) {
         try {
             cdpService.createTask(request);
         } catch (Exception e) {
@@ -29,12 +29,21 @@ public class CDPController {
         return ResponseEntity.status(201).body("TASK CREATED SUCCESSFULLY!");
     }
     @PutMapping("v1/organizations/{org_name}/projects/{project_name}/tasks")
-    public ResponseEntity<?> updateTasks(@RequestBody JsonNode request) throws JsonProcessingException {
+    public ResponseEntity<?> updateTasks(@RequestBody JsonNode request) {
         try {
             cdpService.updateTask(request);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
         return ResponseEntity.status(201).body("TASK UPDATED SUCCESSFULLY!");
+    }
+    @DeleteMapping("v1/organizations/{org_name}/projects/{project_name}/tasks")
+    public ResponseEntity<?> deleteTasks(@RequestBody JsonNode request) {
+        try {
+            cdpService.deleteTask(request);
+            return ResponseEntity.status(200).body("TASK DELETED SUCCESSFULLY!");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }
