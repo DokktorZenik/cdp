@@ -31,7 +31,7 @@ public class CDPService {
             ObjectNode fullTask = ((ObjectNode)task)
                     .put("created_by", creator)
                     .put("org_id", context.getOrgId())
-                    .put("project_id", context.getProjectId()); //TODO: Access Metadata service for project ID and org ID
+                    .put("project_id", context.getProjectId());
 
             rabbitTemplate.convertAndSend("task-exchange","task",
                     (Object) mapper.createObjectNode()
@@ -59,6 +59,24 @@ public class CDPService {
             rabbitTemplate.convertAndSend("task-exchange","task",
                     (Object) mapper.createObjectNode()
                             .put("method","UPDATE")
+                            .set("body",fullTask));
+        }
+
+    }
+
+    public void deleteTask(JsonNode request){
+        ObjectMapper mapper = new ObjectMapper();
+
+        if(!request.get("tasks").isArray()){
+            return;
+        }
+        ArrayNode tasks = (ArrayNode) request.get("tasks");
+        for (JsonNode task : tasks) {
+            ObjectNode fullTask = mapper.createObjectNode()
+                    .put("id",task.get("id").asLong());
+            rabbitTemplate.convertAndSend("task-exchange","task",
+                    (Object) mapper.createObjectNode()
+                            .put("method","DELETE")
                             .set("body",fullTask));
         }
 
