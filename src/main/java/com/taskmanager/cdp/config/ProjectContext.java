@@ -6,6 +6,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 public class ProjectContext {
-    private final Integer orgId;
-    private final Integer projectId;
+    private final Long orgId;
+    private final Long projectId;
 }

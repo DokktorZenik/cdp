@@ -8,4 +8,17 @@ spring:
 server:
   port: 8081
 sqlite:
-  url: jdbc:sqlite:/home/almerlinux/Microservices/metadata.sqlite
+  url: jdbc:sqlite:/home/almerlinux/Microservices/db/testdbs/metadata/metadata.db
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    metrics:
+      enabled: true
+  prometheus:
+    metrics:
+      export:
+        enabled: true

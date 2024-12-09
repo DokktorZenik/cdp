@@ -37,10 +37,10 @@ public class CDPController {
         }
         return ResponseEntity.status(201).body("TASK UPDATED SUCCESSFULLY!");
     }
-    @DeleteMapping("v1/organizations/{org_name}/projects/{project_name}/tasks")
-    public ResponseEntity<?> deleteTasks(@RequestBody JsonNode request) {
+    @DeleteMapping("v1/organizations/{org_name}/projects/{project_name}/tasks/{task_id}")
+    public ResponseEntity<?> deleteTasks(@PathVariable Long task_id) {
         try {
-            cdpService.deleteTask(request);
+            cdpService.deleteTask(task_id);
             return ResponseEntity.status(200).body("TASK DELETED SUCCESSFULLY!");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

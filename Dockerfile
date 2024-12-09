@@ -4,6 +4,6 @@ WORKDIR /app
 
 COPY target/cdp-0.0.1-SNAPSHOT.jar /app/app.jar
 
-EXPOSE 8080
+EXPOSE 8081
 
 ENTRYPOINT ["java", "-jar", "app.jar"]

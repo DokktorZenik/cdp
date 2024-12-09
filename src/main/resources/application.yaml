@@ -9,3 +9,16 @@ server:
   port: ${SERVER_PORT}
 sqlite:
   url: ${SQLITE_URL}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    metrics:
+      enabled: true
+  prometheus:
+    metrics:
+      export:
+        enabled: true

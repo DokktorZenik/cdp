@@ -44,7 +44,7 @@ public class OrgAndProjFilter implements Filter {
             if (matcher.matches()) {
                 String orgName = matcher.group(1);
                 String projectName = matcher.group(2);
-                Integer[] ids = sqLiteService.getIds(orgName, projectName);
+                Long[] ids = sqLiteService.getIds(orgName, projectName);
                 HttpServletResponse httpServletResponse = (HttpServletResponse) response;
                 if(ids == null || ids[0] == null || ids[1] == null) {
                     httpServletResponse.setStatus(HttpStatus.BAD_REQUEST.value());
